@@ -1,9 +1,6 @@
 package rybina.models;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class Person {
 
@@ -20,27 +17,22 @@ public class Person {
     @Email()
     private String email;
 
+    @Pattern(regexp = "[A-Z]\\w+ [A-Z]\\w+ \\d{3} \\d{2}", message = "incorrect address")
+    private String address;
+    // Страна, город, индекс (6 цифр)
+
+    public Person(int id, String name, int age, String email, String address) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        this.address = address;
+    }
 
     public Person() {
 
     }
 
-    public Person(int id, String name, int age, String email) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.email = email;
-    }
-
-    @Override
-    public String  toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", email='" + email + '\'' +
-                '}';
-    }
 
     public int getId() {
         return id;
@@ -72,5 +64,13 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
