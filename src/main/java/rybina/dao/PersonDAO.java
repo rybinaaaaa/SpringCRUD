@@ -61,11 +61,6 @@ public class PersonDAO {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            person.setId(resultSet.getInt("id"));
-            person.setName(resultSet.getString("name"));
-            person.setEmail(resultSet.getString("email"));
-            person.setAge(resultSet.getInt("age"));
-            System.out.println(person);
             return person;
         } catch (SQLException e) {
             throw new RuntimeException(e);

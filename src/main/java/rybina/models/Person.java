@@ -6,48 +6,27 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 public class Person {
-
-    private int id;
-
     @NotEmpty(message = "Name can not be empty")
     @Size(min = 2, max = 30, message = "Name should be longer then 2 symbols & shorter then 30 symbols")
     private String name;
 
-    @Min(value = 0, message = "male should not to be empty")
-    private int age;
+    @NotEmpty(message = "Surname can not be empty")
+    @Size(min = 2, max = 30, message = "Surname should be longer then 2 symbols & shorter then 30 symbols")
+    private String surname;
 
-    @NotEmpty()
-    @Email()
-    private String email;
+    @NotEmpty(message = "Year can not be empty")
+    @Min(value = 1900, message = "Incorrect date of birth")
+    private int birthYear;
 
 
     public Person() {
 
     }
 
-    public Person(int id, String name, int age, String email) {
-        this.id = id;
+    public Person(String name, String surname, int birthYear) {
         this.name = name;
-        this.age = age;
-        this.email = email;
-    }
-
-    @Override
-    public String  toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.surname = surname;
+        this.birthYear = birthYear;
     }
 
     public String getName() {
@@ -58,19 +37,19 @@ public class Person {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public String getEmail() {
-        return email;
+    public int getBirthYear() {
+        return birthYear;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setBirthYear(int birthYear) {
+        this.birthYear = birthYear;
     }
 }
