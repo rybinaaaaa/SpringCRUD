@@ -1,0 +1,74 @@
+package rybina.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import rybina.dao.BookDAO;
+import rybina.dao.PersonDAO;
+import rybina.models.Book;
+import rybina.models.Person;
+
+import java.util.List;
+
+@Controller
+@RequestMapping("/books")
+public class BookController {
+
+    BookDAO bookDAO;
+    PersonDAO personDAO;
+
+    @Autowired
+    public BookController(BookDAO bookDAO, PersonDAO personDAO) {
+        this.bookDAO = bookDAO;
+        this.personDAO = personDAO;
+    }
+
+    @GetMapping()
+    public String index(Model model) {
+        List<Book> books = bookDAO.index();
+        model.addAttribute("books", books);
+        return "books/index";
+    }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") int id, Model model) {
+        Book book = bookDAO.show(id);
+        Person person = null;
+        if (book.getAuthor() != null) {
+            person = personDAO.show(book.getPerson_id());
+        }
+        model.addAttribute("book", book);
+        model.addAttribute("person", person);
+        return "books/show";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("book", bookDAO.show(id));
+        return "books/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String save(@PathVariable("id") int id, @ModelAttribute("book") Book book) {
+        bookDAO.update(id, book);
+        return "redirect:/books";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        bookDAO.delete(id);
+        return "redirect:/books";
+    }
+
+    @GetMapping("/new")
+    public String newItem(@ModelAttribute Book book) {
+        return "books/new";
+    }
+
+    @PostMapping()
+    public String create(@ModelAttribute Book book) {
+        bookDAO.save(book);
+        return "redirect:/books";
+    }
+}
