@@ -2,7 +2,6 @@ package rybina.models;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 public class Book {
 
@@ -27,6 +26,12 @@ public class Book {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return name + ", " + year +
+                ", author:" + author;
     }
 
     public int getPerson_id() {

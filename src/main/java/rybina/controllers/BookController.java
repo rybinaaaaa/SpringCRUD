@@ -35,11 +35,15 @@ public class BookController {
     public String show(@PathVariable("id") int id, Model model) {
         Book book = bookDAO.show(id);
         Person person = null;
+        List<Person> people = null;
         if (book.getAuthor() != null) {
             person = personDAO.show(book.getPerson_id());
+        } else {
+            people = personDAO.index();
         }
         model.addAttribute("book", book);
         model.addAttribute("person", person);
+        model.addAttribute("people", people);
         return "books/show";
     }
 
@@ -62,13 +66,20 @@ public class BookController {
     }
 
     @GetMapping("/new")
-    public String newItem(@ModelAttribute Book book) {
+    public String newItem(@ModelAttribute("book") Book book) {
         return "books/new";
     }
 
     @PostMapping()
-    public String create(@ModelAttribute Book book) {
+    public String create(@ModelAttribute("book") Book book) {
         bookDAO.save(book);
+        return "redirect:/books";
+    }
+
+    @PatchMapping("/setOwner/{id}")
+    public String setOwner(@ModelAttribute("book") Book book, @PathVariable("id") int id) {
+        System.out.println(book);
+        bookDAO.update(id, book);
         return "redirect:/books";
     }
 }

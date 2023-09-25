@@ -1,11 +1,13 @@
 package rybina.models;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 public class Person {
+
+    @NotEmpty
+    private int id;
     @NotEmpty(message = "Name can not be empty")
     @Size(min = 2, max = 30, message = "Name should be longer then 2 symbols & shorter then 30 symbols")
     private String name;
@@ -16,17 +18,26 @@ public class Person {
 
     @NotEmpty(message = "Year can not be empty")
     @Min(value = 1900, message = "Incorrect date of birth")
-    private int birthYear;
+    private int year;
 
 
     public Person() {
 
     }
 
-    public Person(String name, String surname, int birthYear) {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Person(int id, String name, String surname, int year) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
-        this.birthYear = birthYear;
+        this.year = year;
     }
 
     public String getName() {
@@ -45,11 +56,18 @@ public class Person {
         this.surname = surname;
     }
 
-    public int getBirthYear() {
-        return birthYear;
+    public int getYear() {
+        return year;
     }
 
-    public void setBirthYear(int birthYear) {
-        this.birthYear = birthYear;
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    @Override
+    public String toString() {
+        return name +
+                ", " + surname +
+                ", " + year;
     }
 }

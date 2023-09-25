@@ -22,8 +22,8 @@ public class BookDAO {
         return jdbcTemplate.query("select * from book", new BeanPropertyRowMapper<>(Book.class));
     }
 
-    public void update(Book updatedBook) {
-        jdbcTemplate.update("set book set name = ?, year = ?, person_id = ?, author  = ? where id = ?", updatedBook.getName(), updatedBook.getYear(), updatedBook.getPerson_id(), updatedBook.getAuthor(),updatedBook.getId());
+    public void update(int id, Book updatedBook) {
+        jdbcTemplate.update("update book set name = ?, year = ?, person_id = ?, author  = ? where id = ?", updatedBook.getName(), updatedBook.getYear(), updatedBook.getPerson_id(), updatedBook.getAuthor(), id);
     }
 
     public void save(Book book) {
