@@ -3,12 +3,14 @@ package rybina.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import rybina.dao.BookDAO;
 import rybina.dao.PersonDAO;
 import rybina.models.Book;
 import rybina.models.Person;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -54,7 +56,10 @@ public class BookController {
     }
 
     @PatchMapping("/{id}")
-    public String save(@PathVariable("id") int id, @ModelAttribute("book") Book book) {
+    public String save(@PathVariable("id") int id, @Valid @ModelAttribute("book") Book book, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "books/edit";
+        }
         bookDAO.update(id, book);
         return "redirect:/books";
     }
@@ -71,14 +76,19 @@ public class BookController {
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("book") Book book) {
+    public String create(@ModelAttribute("book") Book book, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "books/new";
+        }
         bookDAO.save(book);
         return "redirect:/books";
     }
 
     @PatchMapping("/setOwner/{id}")
-    public String setOwner(@ModelAttribute("book") Book book, @PathVariable("id") int id) {
-        System.out.println(book);
+    public String setOwner(@Valid @ModelAttribute("book") Book book, BindingResult bindingResult, @PathVariable("id") int id) {
+        if (bindingResult.hasErrors()) {
+            return "books/new";
+        }
         bookDAO.update(id, book);
         return "redirect:/books";
     }

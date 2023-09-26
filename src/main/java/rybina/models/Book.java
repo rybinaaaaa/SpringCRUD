@@ -2,10 +2,11 @@ package rybina.models;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class Book {
 
-    @NotEmpty
+    @NotNull
     private int id;
 
     @NotEmpty(message = "Name can not be empty")

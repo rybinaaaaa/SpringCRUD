@@ -14,9 +14,9 @@
 <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
     <input type="submit" value="Delete book"/>
 </form>
-<br>
+<hr />
 <div th:if="${person!=null}">
-    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.toString()}"></a>
+    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${'this book is taken by ' + person.toString()}"></a>
     <form th:action="@{/books/setOwner/{id}(id=${book.getId()})}" th:method="PATCH" th:object="${book}">
         <input type="hidden" th:value="${null}" th:field="*{person_id}" />
         <input type="hidden" th:value="${book.getName()}" th:field="*{name}" />
