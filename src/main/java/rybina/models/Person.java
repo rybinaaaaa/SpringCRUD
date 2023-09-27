@@ -6,7 +6,6 @@ import javax.validation.constraints.Size;
 
 public class Person {
 
-    @NotEmpty
     private int id;
     @NotEmpty(message = "Name can not be empty")
     @Size(min = 2, max = 30, message = "Name should be longer then 2 symbols & shorter then 30 symbols")
@@ -16,7 +15,6 @@ public class Person {
     @Size(min = 2, max = 30, message = "Surname should be longer then 2 symbols & shorter then 30 symbols")
     private String surname;
 
-    @NotEmpty(message = "Year can not be empty")
     @Min(value = 1900, message = "Incorrect date of birth")
     private int year;
 

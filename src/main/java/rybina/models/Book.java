@@ -5,8 +5,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class Book {
-
-    @NotNull
     private int id;
 
     @NotEmpty(message = "Name can not be empty")
@@ -15,7 +13,6 @@ public class Book {
     @NotEmpty(message = "Book should have author")
     private String author;
 
-    @NotEmpty(message = "Year can not be empty")
     @Min(value = 1900, message = "Incorrect year")
     private int year;
 
