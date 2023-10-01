@@ -2,7 +2,6 @@ package rybina.models;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 public class Book {
     private int id;
@@ -16,7 +15,7 @@ public class Book {
     @Min(value = 1900, message = "Incorrect year")
     private int year;
 
-    private int person_id;
+    private Integer person_id;
 
     public int getId() {
         return id;
@@ -32,11 +31,23 @@ public class Book {
                 ", author:" + author;
     }
 
-    public int getPerson_id() {
+
+//    @Override
+//    public String toString() {
+//        return "Book{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", author='" + author + '\'' +
+//                ", year=" + year +
+//                ", person_id=" + person_id +
+//                '}';
+//    }
+
+    public Integer getPerson_id() {
         return person_id;
     }
 
-    public void setPerson_id(int person_id) {
+    public void setPerson_id(Integer person_id) {
         this.person_id = person_id;
     }
 
@@ -74,7 +85,7 @@ public class Book {
         this.year = year;
     }
 
-    public Book(int id, String name, String author, int year, int person_id) {
+    public Book(int id, String name, String author, int year, Integer person_id) {
         this.id = id;
         this.name = name;
         this.author = author;

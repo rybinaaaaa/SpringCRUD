@@ -38,7 +38,7 @@ public class BookController {
         Book book = bookDAO.show(id);
         Person person = null;
         List<Person> people = null;
-        if (book.getAuthor() != null) {
+        if (book.getPerson_id() != null) {
             person = personDAO.show(book.getPerson_id());
         } else {
             people = personDAO.index();
@@ -85,10 +85,15 @@ public class BookController {
     }
 
     @PatchMapping("/setOwner/{id}")
-    public String setOwner(@Valid @ModelAttribute("book") Book book, BindingResult bindingResult, @PathVariable("id") int id) {
-        if (bindingResult.hasErrors()) {
-            return "books/new";
-        }
+    public String edit(@ModelAttribute("book") Book book, @PathVariable("id") int id) {
+        bookDAO.update(id, book);
+        return "redirect:/books";
+    }
+
+    @PatchMapping("/deleteOwner/{id}")
+    public String edit(@PathVariable("id") int id) {
+        Book book = bookDAO.show(id);
+        book.setPerson_id(null);
         bookDAO.update(id, book);
         return "redirect:/books";
     }
