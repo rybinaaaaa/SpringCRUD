@@ -23,10 +23,10 @@ public class PersonValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        Person person = (Person) o;
-
-        if (personDAO.show(person.getEmail()).isPresent()) {
-            errors.rejectValue("email", "", "this email is already exist");
-        }
+//        Person person = (Person) o;
+//
+//        if (personDAO.show(person.getEmail()).isPresent()) {
+//            errors.rejectValue("email", "", "this email is already exist");
+//        }
     }
 }

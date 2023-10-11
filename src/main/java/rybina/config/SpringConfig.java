@@ -99,12 +99,13 @@ public class SpringConfig  implements WebMvcConfigurer {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("ru.alishev.springcourse.models");
+        sessionFactory.setPackagesToScan("rybina.models");
         sessionFactory.setHibernateProperties(hibernateProperties());
 
         return sessionFactory;
     }
 
+//    бин для спринга, котороый автоматически открывает и закрывает транзакции
     @Bean
     public PlatformTransactionManager hibernateTransactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();

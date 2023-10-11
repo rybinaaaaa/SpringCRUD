@@ -1,28 +1,33 @@
 package rybina.models;
 
+import javax.persistence.*;
 import javax.validation.constraints.*;
 
+@Entity
 public class Person {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column
     @NotEmpty(message = "Name can not be empty")
     @Size(min = 2, max = 30, message = "Name should be longer then 2 symbols & shorter then 30 symbols")
     private String name;
-
+    @Column
     @Min(value = 0, message = "male should not to be empty")
     private int age;
 
+    @Column
     @NotEmpty()
     @Email()
     private String email;
 
-    @Pattern(regexp = "[A-Z]\\w+ [A-Z]\\w+ \\d{3} \\d{2}", message = "incorrect address")
+    @Column
     private String address;
     // Страна, город, индекс (6 цифр)
 
-    public Person(int id, String name, int age, String email, String address) {
-        this.id = id;
+    public Person(String name, int age, String email, String address) {
         this.name = name;
         this.age = age;
         this.email = email;
