@@ -6,5 +6,4 @@ import rybina.models.Person;
 
 @Repository
 public interface PeopleRepository extends JpaRepository<Person, Integer> {
-
 }

@@ -125,16 +125,6 @@ public class SpringConfig  implements WebMvcConfigurer {
         return em;
     }
 
-
-//    бин для спринга, котороый автоматически открывает и закрывает транзакции
-//    @Bean
-//    public PlatformTransactionManager hibernateTransactionManager() {
-//        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-//        transactionManager.setSessionFactory(sessionFactory().getObject());
-//
-//        return transactionManager;
-//    }
-
     @Bean
     public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
