@@ -10,12 +10,12 @@ import java.util.List;
 
 @Transactional(readOnly = true)
 @Service
-public class PeopleService {
+public class PersonService {
 
     private PersonRepository personRepository;
 
     @Autowired
-    public PeopleService(PersonRepository personRepository) {
+    public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
@@ -36,5 +36,10 @@ public class PeopleService {
     @Transactional
     public void save(Person person) {
         personRepository.save(person);
+    }
+
+    @Transactional
+    public void delete(int id) {
+        personRepository.deleteById(id);
     }
 }
