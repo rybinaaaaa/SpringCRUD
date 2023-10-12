@@ -32,6 +32,13 @@ public class BookController {
         model.addAttribute("books", books);
         return "books/index";
     }
+    @GetMapping("/paged")
+    public String index(Model model, @RequestParam("p") int page,
+                        @RequestParam("c") int bookPerPage) {
+        List<Book> books = bookService.findAll(page, bookPerPage);
+        model.addAttribute("books", books);
+        return "books/index";
+    }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
