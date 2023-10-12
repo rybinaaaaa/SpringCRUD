@@ -29,14 +29,13 @@ import java.util.Properties;
 @Configuration
 @ComponentScan("rybina")
 @EnableWebMvc
-//@PropertySource("classpath:database.config")
 @PropertySource("classpath:hibernate.properties")
 @EnableTransactionManagement
 @EnableJpaRepositories("rybina.repositories")
 public class SpringConfig  implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;
-    private Environment environment;
+    private final Environment environment;
 
     @Autowired
     public SpringConfig(ApplicationContext applicationContext, Environment environment) {
@@ -60,6 +59,19 @@ public class SpringConfig  implements WebMvcConfigurer {
         templateEngine.setEnableSpringELCompiler(true);
         return templateEngine;
     }
+    @Bean
+    public DataSource dataSource() {
+        final String URL = environment.getRequiredProperty("hibernate.connection.url");
+        final String PASSWORD = environment.getProperty("hibernate.connection.password");
+        final String USER = environment.getProperty("hibernate.connection.username");
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(Objects.requireNonNull(environment.getProperty("hibernate.driver_class")));
+        dataSource.setUrl(URL);
+        dataSource.setPassword(PASSWORD);
+        dataSource.setUsername(USER);
+
+        return dataSource;
+    }
 
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -68,19 +80,6 @@ public class SpringConfig  implements WebMvcConfigurer {
         registry.viewResolver(resolver);
     }
 
-    @Bean
-    public DataSource dataSource() {
-        final String URL = environment.getProperty("URL");
-        final String PASSWORD = environment.getProperty("PASSWORD");
-        final String USER = environment.getProperty("USERNAME");
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(Objects.requireNonNull(environment.getProperty("DRIVER")));
-        dataSource.setUrl(URL);
-        dataSource.setPassword(PASSWORD);
-        dataSource.setUsername(USER);
-
-        return dataSource;
-    }
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();

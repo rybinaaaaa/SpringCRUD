@@ -24,18 +24,18 @@ public class Person {
 
     @Column
     @Min(value = 1900, message = "Incorrect date of birth")
-    private Integer year;
+    private int year;
 
 
     public Person() {
 
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

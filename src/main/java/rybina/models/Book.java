@@ -21,16 +21,15 @@ public class Book {
 
     @Column
     @Min(value = 1900, message = "Incorrect year")
-    private Integer year;
-
+    private int year;
     @Column
     private Integer person_id;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
