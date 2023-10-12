@@ -17,8 +17,8 @@ import java.util.List;
 @RequestMapping("/books")
 public class BookController {
 
-    private PersonService personService;
-    private BookService bookService;
+    private final PersonService personService;
+    private final BookService bookService;
 
     @Autowired
     public BookController(PersonService personService, BookService bookService) {
@@ -114,8 +114,7 @@ public class BookController {
     public String findLike(Model model, @RequestParam("name") String name) {
         Book book = bookService.findLike(name);
         if (book != null) {
-            model.addAttribute("book", book);
-            return "books/show";
+            return "redirect:/books/" + book.getId();
         }
 
         model.addAttribute("message", "No book by this query was found");

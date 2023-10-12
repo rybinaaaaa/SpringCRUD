@@ -31,7 +31,7 @@
 <div th:if="${person!=null}">
     <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${'this book is taken by ' + person.toString()}"></a>
     <form th:action="@{/books/deleteOwner/{id}(id=${book.getId()})}" th:method="PATCH">
-        <input type="submit" value="delete owner" />
+        <input value="delete owner" type="submit" />
     </form>
 </div>
 </body>
