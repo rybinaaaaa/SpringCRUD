@@ -1,20 +1,29 @@
 package rybina.models;
 
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
+@Entity
 public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column
     @NotEmpty(message = "Name can not be empty")
     private String name;
 
+    @Column
     @NotEmpty(message = "Book should have author")
     private String author;
 
+    @Column
     @Min(value = 1900, message = "Incorrect year")
     private int year;
 
+    @Column
     private Integer person_id;
 
     public int getId() {
