@@ -9,7 +9,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column
     @NotEmpty(message = "Name can not be empty")
@@ -21,7 +21,7 @@ public class Book {
 
     @Column
     @Min(value = 1900, message = "Incorrect year")
-    private int year;
+    private Integer year;
 
     @Column
     private Integer person_id;

@@ -24,7 +24,7 @@ public class Person {
 
     @Column
     @Min(value = 1900, message = "Incorrect date of birth")
-    private int year;
+    private Integer year;
 
 
     public Person() {
