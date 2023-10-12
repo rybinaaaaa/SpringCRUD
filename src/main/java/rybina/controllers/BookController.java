@@ -104,4 +104,21 @@ public class BookController {
         bookService.update(id, book);
         return "redirect:/books";
     }
+
+    @GetMapping("/search")
+    public String search() {
+        return "books/search";
+    }
+
+    @GetMapping("/get")
+    public String findLike(Model model, @RequestParam("name") String name) {
+        Book book = bookService.findLike(name);
+        if (book != null) {
+            model.addAttribute("book", book);
+            return "books/show";
+        }
+
+        model.addAttribute("message", "No book by this query was found");
+        return "not_found";
+    }
 }

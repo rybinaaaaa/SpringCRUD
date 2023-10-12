@@ -7,14 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 import rybina.models.Book;
 import rybina.repositories.BookRepository;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Transactional(readOnly = true)
 @Service
 public class BookService {
 
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
     public BookService(BookRepository bookRepository) {
@@ -33,10 +32,14 @@ public class BookService {
         return bookRepository.findAll(PageRequest.of(offset, count)).getContent();
     }
 
+    public Book findLike(String name) {
+        return bookRepository.findFirstByNameStartingWith(name);
+    }
+
     @Transactional
     public void update(int id, Book book) {
-            book.setId(id);
-            bookRepository.save(book);
+        book.setId(id);
+        bookRepository.save(book);
     }
 
     @Transactional
