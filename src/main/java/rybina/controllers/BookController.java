@@ -11,6 +11,7 @@ import rybina.services.BookService;
 import rybina.services.PersonService;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -54,10 +55,13 @@ public class BookController {
         } else {
             people = personService.findAll();
         }
+
+
         model.addAttribute("book", book);
         model.addAttribute("person", person);
         model.addAttribute("people", people);
         model.addAttribute("owner", owner);
+        model.addAttribute("expired", book.isDateExpired());
         return "books/show";
     }
 

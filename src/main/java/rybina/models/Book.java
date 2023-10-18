@@ -1,8 +1,11 @@
 package rybina.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import java.util.Date;
 
 @Entity
 public class Book {
@@ -24,8 +27,23 @@ public class Book {
     private int year;
 
     @ManyToOne
-    @JoinColumn(name="person_id", referencedColumnName = "id")
-    Person person;
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private Person person;
+
+    @Column(name = "taken_date")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date takenDate;
+
+    public boolean isDateExpired() {
+        boolean expired = false;
+
+        if (takenDate != null && this.person != null) {
+            Date expiredDate = new Date(takenDate.getTime() + 60 * 1000 * 60 * 24 * 10);
+            expired = expiredDate.before(new Date());
+        }
+        return expired;
+    }
 
     public Integer getId() {
         return id;
@@ -41,25 +59,18 @@ public class Book {
                 ", author:" + author;
     }
 
-
-//    @Override
-//    public String toString() {
-//        return "Book{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", author='" + author + '\'' +
-//                ", year=" + year +
-//                ", person_id=" + person_id +
-//                '}';
-//    }
-
-
     public Person getPerson() {
         return person;
     }
 
     public void setPerson(Person person) {
+        if (person == null) {
+            takenDate = null;
+            this.person = null;
+            return;
+        }
         this.person = person;
+        this.takenDate = new Date();
     }
 
     public String getName() {
@@ -84,6 +95,14 @@ public class Book {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public Date getTakenDate() {
+        return takenDate;
+    }
+
+    public void setTakenDate(Date takenDate) {
+        this.takenDate = takenDate;
     }
 
     public Book() {
