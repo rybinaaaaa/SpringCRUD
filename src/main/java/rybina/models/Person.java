@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 public class Person {
@@ -26,6 +27,9 @@ public class Person {
     @Min(value = 1900, message = "Incorrect date of birth")
     private int year;
 
+    @OneToMany(mappedBy = "person")
+    private List<Book> books;
+
 
     public Person() {
 
@@ -39,8 +43,7 @@ public class Person {
         this.id = id;
     }
 
-    public Person(int id, String name, String surname, int year) {
-        this.id = id;
+    public Person(String name, String surname, int year) {
         this.name = name;
         this.surname = surname;
         this.year = year;

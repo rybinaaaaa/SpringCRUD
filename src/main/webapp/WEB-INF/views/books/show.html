@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -15,17 +15,13 @@
     <input type="submit" value="Delete book"/>
 </form>
 <hr />
-<form th:if="${person==null}" th:action="@{/books/setOwner/{id}(id=${book.getId()})}" th:method="PATCH" th:object="${book}">
+<form th:if="${person==null}" th:action="@{/books/setOwner/{id}(id=${book.getId()})}" th:method="PATCH" th:object="${owner}">
     <label>
-        <select name="author" th:field="*{person_id}">
+        <select name="ownerId" th:field="*{id}">
             <option th:each="p : ${people}" th:value="${p.getId()}" th:text="${p.getName() + p.getSurname()}"></option>
         </select>
 
-        <input type="hidden" th:value="${book.getName()}" th:field="*{name}" />
-        <input type="hidden" th:value="${book.getAuthor()}" th:field="*{author}" />
-        <input type="hidden" th:value="${book.getYear()}" th:field="*{year}" />
-
-        <input type="submit" value="Add owner>">
+        <input type="submit" value="Add owner">
     </label>
 </form>
 <div th:if="${person!=null}">

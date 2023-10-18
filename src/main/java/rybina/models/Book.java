@@ -22,8 +22,10 @@ public class Book {
     @Column
     @Min(value = 1900, message = "Incorrect year")
     private int year;
-    @Column
-    private Integer person_id;
+
+    @ManyToOne
+    @JoinColumn(name="person_id", referencedColumnName = "id")
+    Person person;
 
     public Integer getId() {
         return id;
@@ -51,12 +53,13 @@ public class Book {
 //                '}';
 //    }
 
-    public Integer getPerson_id() {
-        return person_id;
+
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPerson_id(Integer person_id) {
-        this.person_id = person_id;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public String getName() {
@@ -86,18 +89,16 @@ public class Book {
     public Book() {
     }
 
-    public Book(int id, String name, String author, int year) {
-        this.id = id;
+    public Book(String name, String author, int year) {
         this.name = name;
         this.author = author;
         this.year = year;
     }
 
-    public Book(int id, String name, String author, int year, Integer person_id) {
-        this.id = id;
+    public Book(String name, String author, int year, Person person) {
         this.name = name;
         this.author = author;
         this.year = year;
-        this.person_id = person_id;
+        this.person = person;
     }
 }

@@ -20,6 +20,8 @@ public class BookController {
     private final PersonService personService;
     private final BookService bookService;
 
+    Book book3 = new Book("name", "author", 2000, null);
+
     @Autowired
     public BookController(PersonService personService, BookService bookService) {
         this.personService = personService;
@@ -45,14 +47,17 @@ public class BookController {
         Book book = bookService.findOne(id);
         Person person = null;
         List<Person> people = null;
-        if (book.getPerson_id() != null) {
-            person = personService.findOne(book.getPerson_id());
+        Person owner = new Person();
+        owner.setId(0);
+        if (book.getPerson() != null) {
+            person = book.getPerson();
         } else {
             people = personService.findAll();
         }
         model.addAttribute("book", book);
         model.addAttribute("person", person);
         model.addAttribute("people", people);
+        model.addAttribute("owner", owner);
         return "books/show";
     }
 
@@ -92,15 +97,18 @@ public class BookController {
     }
 
     @PatchMapping("/setOwner/{id}")
-    public String edit(@ModelAttribute("book") Book book, @PathVariable("id") int id) {
-        bookService.update(id, book);
+    public String editOwner(@ModelAttribute("owner") Person owner, @PathVariable("id") int id) {
+        Book book = bookService.findOne(id);
+        owner = personService.findOne(owner.getId());
+        book.setPerson(owner);
+        bookService.update(book.getId(), book);
         return "redirect:/books";
     }
 
     @PatchMapping("/deleteOwner/{id}")
-    public String edit(@PathVariable("id") int id) {
+    public String deleteOwner(@PathVariable("id") int id) {
         Book book = bookService.findOne(id);
-        book.setPerson_id(null);
+        book.setPerson(null);
         bookService.update(id, book);
         return "redirect:/books";
     }
